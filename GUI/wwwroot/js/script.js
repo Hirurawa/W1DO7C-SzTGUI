@@ -1,5 +1,6 @@
 ﻿let cars = []
 let brands = []
+let noncrud = []
 let connection = null;
 
 let carIDtoupdate = -1;
@@ -56,6 +57,13 @@ async function getdata() {
       brands = y;
       display();
     });
+
+  await fetch('http://localhost:24577/api/Car/GetBrandAverages')
+    .then(x => x.json())
+    .then(y => {
+      noncrud = y;
+      display();
+    });
 }
 
 function display() {
@@ -85,6 +93,13 @@ function display() {
   brands.forEach(b => {
     document.getElementById('brandarea').innerHTML +=
       "<tr><td>" + b.id + "</td><td>" + b.name + "</td><td>"
+      + "</td ></tr>";
+  });
+
+  document.getElementById('noncrudarea').innerHTML = "";
+  noncrud.forEach(b => {
+    document.getElementById('noncrudarea').innerHTML +=
+      "<tr><td>" + b.brandName + "</td><td>" + b.average + "</td><td>"
       + "</td ></tr>";
   });
 }

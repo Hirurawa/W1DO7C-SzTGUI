@@ -1,0 +1,95 @@
+﻿
+table {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 5px;
+}
+
+th {
+  background-color: darkblue;
+  color: white;
+}
+
+#cardiv {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+span, button, input {
+  margin: 10px;
+  padding: 7px;
+}
+
+span {
+  font-weight: bolder;
+  font-family: Calibri;
+}
+
+input {
+  width: 500px;
+}
+
+select {
+  height: 33px;
+  width: 515px;
+}
+
+label {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+button {
+  width: 100px;
+}
+
+#updatecardiv {
+  display: none;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+span, button, input {
+  margin: 10px;
+  padding: 7px;
+}
+
+span {
+  font-weight: bolder;
+  font-family: Calibri;
+}
+
+input {
+  width: 500px;
+}
+
+button {
+  width: 100px;
+}
+
+
+table button {
+  padding: 2px;
+}
+
+h1, h2, th, td, label {
+  font-family: Calibri;
+}
+
+h1 {
+  text-align: center;
+  background-color: darkblue;
+  color: white;
+}

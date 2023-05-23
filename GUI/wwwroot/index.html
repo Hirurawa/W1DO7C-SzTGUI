@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Car Shop</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <h1>Car shop</h1>
+
+  <h2>Car Catalog</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="cararea">
+    </tbody>
+  </table>
+  <form role="form" id="cardiv">
+    <div class="input-group flex-nowrap">
+      <label>Add new car!</label> <br />
+      <span class="input-group-text" id="addon-wrapping">Car brand &emsp; &emsp; &nbsp; </span>
+      <select id="selectbrand">
+      </select>
+      <br />
+      <span class="input-group-text" id="addon-wrapping">Car model &emsp; &emsp; &nbsp; </span>
+      <input type="text" class="form-control" placeholder="Please enter car model" aria-label="model" aria-describedby="addon-wrapping" id="model" />
+      <br />
+      <span class="input-group-text" id="addon-wrapping">Price</span>
+      <input type="number" class="form-control" placeholder="Please enter price" aria-label="price" aria-describedby="addon-wrapping" id="price" />
+      <br />
+      <button type="button" onclick="createcar()">Add Car</button>
+    </div>
+  </form>
+  <form role="form" id="updatecardiv">
+    <div class="input-group flex-nowrap">
+      <label>Update car!</label> <br />
+      <span class="input-group-text" id="addon-wrapping">Car brand &emsp; &emsp; &nbsp; </span>
+      <select id="selectbrandupdate">
+      </select>
+      <br />
+      <span class="input-group-text" id="addon-wrapping">Car model &emsp; &emsp; &nbsp; </span>
+      <input type="text" class="form-control" placeholder="Please enter car model" aria-label="model" aria-describedby="addon-wrapping" id="updatemodel" /> <br />
+      <span class="input-group-text" id="addon-wrapping">Price</span>
+      <input type="number" class="form-control" placeholder="Please enter price" aria-label="price" aria-describedby="addon-wrapping" id="updateprice" /> <br />
+      <button type="button" onclick="updatecar()">Update Car</button>
+    </div>
+  </form>
+
+  <h2>Brand Catalog</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Brand</th>
+      </tr>
+    </thead>
+    <tbody id="brandarea">
+    </tbody>
+  </table>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

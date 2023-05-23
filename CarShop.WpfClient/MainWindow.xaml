@@ -1,0 +1,41 @@
+﻿<Window x:Class="CarShop.WpfClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ViewModels="clr-namespace:CarShop.WpfClient.ViewModels"
+        xmlns:Models="clr-namespace:CarShop.WpfClient.Models"
+        mc:Ignorable="d"
+        Title="Car handler" Height="450" Width="800" Loaded="WindowLoaded" Closing="WindowClose">
+    <Window.Resources>
+        <ViewModels:MainWindowVM x:Key="VM" />
+        <DataTemplate x:Key="CarListTemplate" DataType="Models:CarModel">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label Content="{Binding Id}" HorizontalAlignment="Center" Grid.Column="0" />
+                <Label Content="{Binding BrandId}" HorizontalAlignment="Center" Grid.Column="1" />
+                <Label Content="{Binding Model}" HorizontalAlignment="Center" Grid.Column="2" />
+                <Label Content="{Binding Price}" HorizontalAlignment="Center" Grid.Column="3" />
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource VM}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <ListBox ItemsSource="{Binding Cars}" SelectedItem="{Binding CurrentCar}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource CarListTemplate}" />
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+            <Button Content="Load" Margin="5" MinWidth="50" Command="{Binding LoadCommand}" />
+            <Button Content="View" Margin="5" MinWidth="50" Command="{Binding ViewCommand}" />
+            <Button Content="Add" Margin="5" MinWidth="50" Command="{Binding AddCommand}" />
+            <Button Content="Modify" Margin="5" MinWidth="50" Command="{Binding ModifyCommand}" />
+            <Button Content="Delete" Margin="5" MinWidth="50" Command="{Binding DeleteCommand}" />
+        </StackPanel>
+    </Grid>
+</Window>

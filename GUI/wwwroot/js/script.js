@@ -92,15 +92,15 @@ function display() {
   document.getElementById('brandarea').innerHTML = "";
   brands.forEach(b => {
     document.getElementById('brandarea').innerHTML +=
-      "<tr><td>" + b.id + "</td><td>" + b.name + "</td><td>"
-      + "</td ></tr>";
+      "<tr><td>" + b.id + "</td><td>" + b.name + "</td>"
+      + "</tr>";
   });
 
   document.getElementById('noncrudarea').innerHTML = "";
   noncrud.forEach(b => {
     document.getElementById('noncrudarea').innerHTML +=
-      "<tr><td>" + b.brandName + "</td><td>" + b.average + "</td><td>"
-      + "</td ></tr>";
+      "<tr><td>" + b.brandName + "</td><td>" + b.average + "</td>"
+      + "</tr>";
   });
 }
 
@@ -152,7 +152,7 @@ function updatecar() {
     headers: { 'Content-Type': 'application/json', },
     body: JSON.stringify(
       {
-        carID: carIDtoupdate,
+        id: carIDtoupdate,
         brandId: brandId,
         model: model,
         price: price

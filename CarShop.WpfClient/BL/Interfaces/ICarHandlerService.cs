@@ -9,7 +9,6 @@ namespace CarShop.WpfClient.BL.Interfaces
         void ModifyCar(IList<CarModel> collection, CarModel car);
         void DeleteCar(IList<CarModel> collection, CarModel car);
         void ViewCar(CarModel car);
-
         IList<CarModel> GetAll();
 
         IList<BrandModel> GetAllBrands();

@@ -101,14 +101,13 @@ namespace CarShop.Logic.Services
             //             };
 
             var result = from brand in _brandRepository.ReadAll()
-                         from average in averages.Where(x => x.BrandId == brand.Id).DefaultIfEmpty()
+                         from average in averages.Where(x => x.BrandId == brand.Id)//.DefaultIfEmpty()
                          select new AverageModel()
                          {
                              BrandName = brand.Name,
                              Average = average != null ? average.Average : 0
                          };
-
-            return result.ToList();
+      return result.ToList();
         }
 
         public List<Car> ReadAllByBrandId(int brandId)

@@ -4,6 +4,7 @@ let noncrud = []
 let connection = null;
 
 let carIDtoupdate = -1;
+let brandIDtoupdate = -1;
 
 getdata();
 setupSignalR();
@@ -24,6 +25,18 @@ function setupSignalR() {
   });
 
   connection.on("CarUpdated", (user, message) => {
+    getdata();
+  });
+
+  connection.on("BrandCreated", (user, message) => {
+    getdata();
+  });
+
+  connection.on("BrandtDeleted", (user, message) => {
+    getdata();
+  });
+
+  connection.on("BrandUpdated", (user, message) => {
     getdata();
   });
 
@@ -51,7 +64,7 @@ async function getdata() {
       cars = y;
     });
 
-  await fetch('http://localhost:24577/api/Car/GetAllBrands')
+  await fetch('http://localhost:24577/api/Brand/GetAll')
     .then(x => x.json())
     .then(y => {
       brands = y;
@@ -92,8 +105,10 @@ function display() {
   document.getElementById('brandarea').innerHTML = "";
   brands.forEach(b => {
     document.getElementById('brandarea').innerHTML +=
-      "<tr><td>" + b.id + "</td><td>" + b.name + "</td>"
-      + "</tr>";
+      "<tr><td>" + b.id + "</td><td>" + b.name + "</td><td>"
+      + `<button type="button" onclick="removebrand(${b.id})">Delete</button>`
+      + `<button type="button" onclick="showbrandupdate(${b.id})">Update</button>`
+      + "</td></tr>";
   });
 
   document.getElementById('noncrudarea').innerHTML = "";
@@ -173,6 +188,78 @@ function removecar(id) {
 
   if (response) {
     fetch('http://localhost:24577/api/Car/Delete/' + id, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json', },
+      body: null
+    })
+      .then(response => response)
+      .then(data => {
+        console.log('Success:', data);
+        getdata();
+      })
+      .catch((error) => { console.error('Error:', error); });
+  }
+}
+
+function createbrand() {
+  let name = document.getElementById('name').value;
+
+  fetch('http://localhost:24577/api/Brand/Create/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', },
+    body: JSON.stringify(
+      {
+        name: name
+      }),
+  })
+    .then(response => response)
+    .then(data => {
+      console.log('Success:', data);
+      getdata();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
+}
+
+function showbrandupdate(id) {
+  document.getElementById('updatebrandname').value = brands.find(t => t['id'] == id)['name'];
+  document.getElementById('updatebranddiv').style.display = 'flex';
+  //document.getElementById('branddiv').style.display = 'none';
+  brandIDtoupdate = id;
+}
+
+function updatebrand() {
+  document.getElementById('updatebranddiv').style.display = 'none';
+  //document.getElementById('branddiv').style.display = 'flex';
+
+  let name = document.getElementById('updatebrandname').value;
+
+  fetch('http://localhost:24577/api/Brand/Update/', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', },
+    body: JSON.stringify(
+      {
+        id: brandIDtoupdate,
+        name: name
+      }),
+  })
+    .then(response => response)
+    .then(data => {
+      console.log('Success:', data);
+      getdata();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+function removebrand(id) {
+  let response = confirm("Are you sure? This will delete all cars with this brand!");
+
+  if (response) {
+    fetch('http://localhost:24577/api/Brand/Delete/' + id, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json', },
       body: null

@@ -7,35 +7,56 @@
         xmlns:Models="clr-namespace:CarShop.WpfClient.Models"
         mc:Ignorable="d"
         Title="Car handler" Height="450" Width="800" Loaded="WindowLoaded" Closing="WindowClose">
-    <Window.Resources>
-        <ViewModels:MainWindowVM x:Key="VM" />
-        <DataTemplate x:Key="CarListTemplate" DataType="Models:CarModel">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
-                <Label Content="{Binding Id}" HorizontalAlignment="Center" Grid.Column="0" />
-                <Label Content="{Binding BrandId}" HorizontalAlignment="Center" Grid.Column="1" />
-                <Label Content="{Binding Model}" HorizontalAlignment="Center" Grid.Column="2" />
-                <Label Content="{Binding Price}" HorizontalAlignment="Center" Grid.Column="3" />
-            </Grid>
-        </DataTemplate>
-    </Window.Resources>
-    <Grid DataContext="{StaticResource VM}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="40" />
-        </Grid.RowDefinitions>
-        <ListBox ItemsSource="{Binding Cars}" SelectedItem="{Binding CurrentCar}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource CarListTemplate}" />
-        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-            <Button Content="Load" Margin="5" MinWidth="50" Command="{Binding LoadCommand}" />
-            <Button Content="View" Margin="5" MinWidth="50" Command="{Binding ViewCommand}" />
-            <Button Content="Add" Margin="5" MinWidth="50" Command="{Binding AddCommand}" />
-            <Button Content="Modify" Margin="5" MinWidth="50" Command="{Binding ModifyCommand}" />
-            <Button Content="Delete" Margin="5" MinWidth="50" Command="{Binding DeleteCommand}" />
-        </StackPanel>
-    </Grid>
+  <Window.Resources>
+    <ViewModels:MainWindowVM x:Key="VM"/>
+    <DataTemplate x:Key="CarListTemplate" DataType="Models:CarModel">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="1*"/>
+          <ColumnDefinition Width="1*"/>
+          <ColumnDefinition Width="1*"/>
+          <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="{Binding Id}" HorizontalAlignment="Center" Grid.Column="0"/>
+        <Label Content="{Binding BrandId}" HorizontalAlignment="Center" Grid.Column="1"/>
+        <Label Content="{Binding Model}" HorizontalAlignment="Center" Grid.Column="2"/>
+        <Label Content="{Binding Price}" HorizontalAlignment="Center" Grid.Column="3"/>
+      </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="BrandListTemplate" DataType="Models:BrandModel">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="1*"/>
+          <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="{Binding Id}" HorizontalAlignment="Center" Grid.Column="0"/>
+        <Label Content="{Binding Name}" HorizontalAlignment="Center" Grid.Column="1"/>
+      </Grid>
+    </DataTemplate>
+  </Window.Resources>
+  <Grid DataContext="{StaticResource VM}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="1*"/>
+      <RowDefinition Height="40"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="1*"/>
+      <ColumnDefinition Width="1*"/>
+    </Grid.ColumnDefinitions>
+    <ListBox ItemsSource="{Binding Cars}" SelectedItem="{Binding CurrentCar}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource CarListTemplate}"/>
+    <ListBox ItemsSource="{Binding Brands}" SelectedItem="{Binding CurrentBrand}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource BrandListTemplate}" Grid.Column="1"/>
+    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
+      <Button Content="Load" Margin="5" MinWidth="50" Command="{Binding LoadCommand}"/>
+      <Button Content="View" Margin="5" MinWidth="50" Command="{Binding ViewCarCommand}"/>
+      <Button Content="Add" Margin="5" MinWidth="50" Command="{Binding AddCarCommand}"/>
+      <Button Content="Modify" Margin="5" MinWidth="50" Command="{Binding ModifyCarCommand}"/>
+      <Button Content="Delete" Margin="5" MinWidth="50" Command="{Binding DeleteCarCommand}"/>
+    </StackPanel>
+    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
+      <Button Content="View" Margin="5" MinWidth="50" Command="{Binding ViewBrandCommand}"/>
+      <Button Content="Add" Margin="5" MinWidth="50" Command="{Binding AddBrandCommand}"/>
+      <Button Content="Modify" Margin="5" MinWidth="50" Command="{Binding ModifyBrandCommand}"/>
+      <Button Content="Delete" Margin="5" MinWidth="50" Command="{Binding DeleteBrandCommand}"/>
+    </StackPanel>
+  </Grid>
 </Window>

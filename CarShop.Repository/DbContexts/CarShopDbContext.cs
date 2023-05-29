@@ -15,7 +15,13 @@ namespace CarShop.Repository.DbContexts
 
         public CarShopDbContext()
         {
+          try
+          {
             Database.EnsureCreated();
+          }
+          catch (Exception)
+          {
+          }
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

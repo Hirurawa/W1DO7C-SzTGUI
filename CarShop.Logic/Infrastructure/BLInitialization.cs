@@ -17,7 +17,7 @@ namespace CarShop.Logic.Infrastructure
             RepoInitialization.InitRepoServices(services);
 
             services.AddScoped<ICarLogic, CarLogic>();
-            // TODO: brandService
+            services.AddScoped<IBrandLogic, BrandLogic>();
         }
     }
 }

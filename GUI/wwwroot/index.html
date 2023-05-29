@@ -60,11 +60,29 @@
       <tr>
         <th>ID</th>
         <th>Brand</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody id="brandarea">
     </tbody>
   </table>
+  <form role="form" id="branddiv">
+    <div class="input-group flex-nowrap">
+      <label>Add new brand!</label> <br />
+      <span class="input-group-text" id="addon-wrapping">Brand name &emsp; &emsp; &nbsp; </span>
+      <input type="text" class="form-control" placeholder="Please enter brand name" aria-label="name" aria-describedby="addon-wrapping" id="name" />
+      <br />
+      <button type="button" onclick="createbrand()">Add Brand</button>
+    </div>
+  </form>
+  <form role="form" id="updatebranddiv">
+    <div class="input-group flex-nowrap">
+      <label>Update brand!</label> <br />
+      <span class="input-group-text" id="addon-wrapping">Brand name &emsp; &emsp; &nbsp; </span>
+      <input type="text" class="form-control" placeholder="Please enter brand name" aria-label="name" aria-describedby="addon-wrapping" id="updatebrandname" /> <br />
+      <button type="button" onclick="updatebrand()">Update Brand</button>
+    </div>
+  </form>
 
 
   <h2>Average price per brands</h2>

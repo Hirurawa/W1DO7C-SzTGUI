@@ -9,163 +9,163 @@ using System.Linq;
 
 namespace CarShop.WpfClient.BL.Implementation
 {
-    public class CarHandlerService : ICarHandlerService
+  public class CarHandlerService : ICarHandlerService
+  {
+    readonly IMessenger messenger;
+    readonly ICarEditorService editorService;
+    readonly ICarDisplayService carDisplayService;
+    HttpService httpService;
+
+    public CarHandlerService(IMessenger messenger, ICarEditorService editorService, ICarDisplayService carDisplayService) // Should come from IoC <- dependency injection
     {
-        readonly IMessenger messenger;
-        readonly ICarEditorService editorService;
-        readonly ICarDisplayService carDisplayService;
-        HttpService httpService;
+      this.messenger = messenger;
+      this.editorService = editorService;
+      this.carDisplayService = carDisplayService;
+      httpService = new HttpService("Car", "http://localhost:24577/api/"); // This can be taken via IoC in the future
+    }
 
-        public CarHandlerService(IMessenger messenger, ICarEditorService editorService, ICarDisplayService carDisplayService) // Should come from IoC <- dependency injection
+    public void AddCar(IList<CarModel> collection)
+    {
+      CarModel carToEdit = null;
+      bool operationFinished = false;
+
+      do
+      {
+        var newCar = editorService.EditCar(carToEdit);
+
+        if (newCar != null)
         {
-            this.messenger = messenger;
-            this.editorService = editorService;
-            this.carDisplayService = carDisplayService;
-            httpService = new HttpService("Car", "http://localhost:24577/api/"); // This can be taken via IoC in the future
+          var operationResult = httpService.Create(new CarDTO()
+          {
+            BrandId = newCar.BrandId,
+            Model = newCar.Model,
+            Price = newCar.Price
+          });
+
+          carToEdit = newCar;
+          operationFinished = operationResult.IsSuccess;
+
+          if (operationResult.IsSuccess)
+          {
+            //collection.Add(newCar);
+            RefreshCollectionFromServer(collection);
+
+            SendMessage("Car add was successful");
+          }
+          else
+          {
+            SendMessage(operationResult.Messages.ToArray());
+          }
         }
-
-        public void AddCar(IList<CarModel> collection)
+        else
         {
-            CarModel carToEdit = null;
-            bool operationFinished = false;
-
-            do
-            {
-                var newCar = editorService.EditCar(carToEdit);
-
-                if (newCar != null)
-                {
-                    var operationResult = httpService.Create(new CarDTO()
-                    {
-                        BrandId = newCar.BrandId,
-                        Model = newCar.Model,
-                        Price = newCar.Price
-                    });
-
-                    carToEdit = newCar;
-                    operationFinished = operationResult.IsSuccess;
-
-                    if (operationResult.IsSuccess)
-                    {
-                        //collection.Add(newCar);
-                        RefreshCollectionFromServer(collection);
-
-                        SendMessage("Car add was successful");
-                    }
-                    else
-                    {
-                        SendMessage(operationResult.Messages.ToArray());
-                    }
-                }
-                else
-                {
-                    SendMessage("Car add has cancelled");
-                    operationFinished = true;
-                }
-            } while (!operationFinished);
+          SendMessage("Car add has cancelled");
+          operationFinished = true;
         }
+      } while (!operationFinished);
+    }
 
-        private void RefreshCollectionFromServer(IList<CarModel> collection)
+    private void RefreshCollectionFromServer(IList<CarModel> collection)
+    {
+      collection.Clear();
+      var newCars = GetAll();
+
+      foreach (var car in newCars)
+      {
+        collection.Add(car);
+      }
+    }
+
+    private void SendMessage(params string[] messages)
+    {
+      messenger.Send(messages, "BlOperationResult");
+    }
+
+    public void ModifyCar(IList<CarModel> collection, CarModel car)
+    {
+      CarModel carToEdit = car;
+      bool operationFinished = false;
+
+      do
+      {
+        var editedCar = editorService.EditCar(carToEdit);
+
+        if (editedCar != null)
         {
-            collection.Clear();
-            var newCars = GetAll();
+          var operationResult = httpService.Update(new CarDTO()
+          {
+            Id = car.Id, // This prop cannot be changed
+            BrandId = editedCar.BrandId,
+            Model = editedCar.Model,
+            Price = editedCar.Price
+          });
 
-            foreach (var car in newCars)
-            {
-                collection.Add(car);
-            }
+          carToEdit = editedCar;
+          operationFinished = operationResult.IsSuccess;
+
+          if (operationResult.IsSuccess)
+          {
+            RefreshCollectionFromServer(collection);
+            SendMessage("Car modification was successful");
+          }
+          else
+          {
+            SendMessage(operationResult.Messages.ToArray());
+          }
         }
-
-        private void SendMessage(params string[] messages)
+        else
         {
-            messenger.Send(messages, "BlOperationResult");
+          SendMessage("Car modification has cancelled");
+          operationFinished = true;
         }
+      } while (!operationFinished);
+    }
 
-        public void ModifyCar(IList<CarModel> collection, CarModel car)
+    public void DeleteCar(IList<CarModel> collection, CarModel car)
+    {
+      if (car != null)
+      {
+        var operationResult = httpService.Delete(car.Id);
+
+        if (operationResult.IsSuccess)
         {
-            CarModel carToEdit = car;
-            bool operationFinished = false;
-
-            do
-            {
-                var editedCar = editorService.EditCar(carToEdit);
-
-                if (editedCar != null)
-                {
-                    var operationResult = httpService.Update(new CarDTO()
-                    {
-                        Id = car.Id, // This prop cannot be changed
-                        BrandId = editedCar.BrandId,
-                        Model = editedCar.Model,
-                        Price = editedCar.Price
-                    });
-
-                    carToEdit = editedCar;
-                    operationFinished = operationResult.IsSuccess;
-
-                    if (operationResult.IsSuccess)
-                    {
-                        RefreshCollectionFromServer(collection);
-                        SendMessage("Car modification was successful");
-                    }
-                    else
-                    {
-                        SendMessage(operationResult.Messages.ToArray());
-                    }
-                }
-                else
-                {
-                    SendMessage("Car modification has cancelled");
-                    operationFinished = true;
-                }
-            } while (!operationFinished);
+          RefreshCollectionFromServer(collection);
+          SendMessage("Car deletion was successful");
         }
-
-        public void DeleteCar(IList<CarModel> collection, CarModel car)
+        else
         {
-            if (car != null)
-            {
-                var operationResult = httpService.Delete(car.Id);
-
-                if (operationResult.IsSuccess)
-                {
-                    RefreshCollectionFromServer(collection);
-                    SendMessage("Car deletion was successful");
-                }
-                else
-                {
-                    SendMessage(operationResult.Messages.ToArray());
-                }
-            }
-            else
-            {
-                SendMessage("Car deletion failed");
-            }
+          SendMessage(operationResult.Messages.ToArray());
         }
+      }
+      else
+      {
+        SendMessage("Car deletion failed");
+      }
+    }
 
-        public IList<CarModel> GetAll()
-        {
-            // This data comes from DB, API or something like that
-            var cars = httpService.GetAll<Car>();
+    public IList<CarModel> GetAll()
+    {
+      // This data comes from DB, API or something like that
+      var cars = httpService.GetAll<Car>();
 
-            return cars.Select(x => new CarModel(x.Id, x.Price, x.Model, x.BrandId)).ToList(); // TODO: use AutoMapper in the future
-        }
+      return cars.Select(x => new CarModel(x.Id, x.Price, x.Model, x.BrandId)).ToList(); // TODO: use AutoMapper in the future
+    }
 
-        public IList<BrandModel> GetAllBrands()
-        {
-            var brands = new List<BrandModel>()
+    public IList<BrandModel> GetAllBrands()
+    {
+      var brands = new List<BrandModel>()
             {
                 new BrandModel(1, "Mazda"),
                 new BrandModel(2, "Opel"),
                 new BrandModel(3, "BMW"),
             }; // TODO: get it from API endpoint!
 
-            return brands; // Note: at this point we have to map the data
-        }
-
-        public void ViewCar(CarModel car)
-        {
-            carDisplayService.Display(car);
-        }
+      return brands; // Note: at this point we have to map the data
     }
+
+    public void ViewCar(CarModel car)
+    {
+      carDisplayService.Display(car);
+    }
+  }
 }

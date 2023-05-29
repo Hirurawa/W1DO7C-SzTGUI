@@ -125,7 +125,8 @@ namespace CarShop.Endpoint.Controllers
             return carLogic.GetBrandAverages();
         }
 
-        [HttpGet]
+    // GET: api/Car/GetAllBrands
+    [HttpGet]
         public IEnumerable<Brand> GetAllBrands()
         {
             // TODO: get it from DB
@@ -136,5 +137,5 @@ namespace CarShop.Endpoint.Controllers
                 new Brand() { Id = 3, Name = "BMW" },
             };
         }
-    }
+  }
 }

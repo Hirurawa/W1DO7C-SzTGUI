@@ -8,61 +8,95 @@ using System.Windows.Input;
 
 namespace CarShop.WpfClient.ViewModels
 {
-    public class MainWindowVM : ViewModelBase
+  public class MainWindowVM : ViewModelBase
+  {
+    private CarModel currentCar;
+
+    public CarModel CurrentCar
     {
-        private CarModel currentCar;
-
-        public CarModel CurrentCar
-        {
-            get { return currentCar; }
-            set { Set(ref currentCar, value); }
-        }
-
-        public ObservableCollection<CarModel> Cars { get; private set; }
-
-        public ICommand AddCommand { get; private set; }
-        public ICommand ModifyCommand { get; private set; }
-        public ICommand DeleteCommand { get; private set; }
-        public ICommand ViewCommand { get; private set; }
-
-        public ICommand LoadCommand { get; private set; }
-
-        readonly ICarHandlerService carHandlerService;
-
-        public MainWindowVM(ICarHandlerService carHandlerService)
-        {
-            this.carHandlerService = carHandlerService;
-            Cars = new ObservableCollection<CarModel>();
-
-            if (IsInDesignMode)
-            {
-                Cars.Add(new CarModel(1, 1200, "3", 1));
-                Cars.Add(new CarModel(2, 2200, "MX8", 1));
-                var astra = new CarModel(3, 1400, "Astra G", 2);
-                Cars.Add(astra);
-                Cars.Add(new CarModel(4, 3000, "A4", 3));
-                CurrentCar = astra;
-            }
-
-            LoadCommand = new RelayCommand(() =>
-            {
-                var cars = this.carHandlerService.GetAll();
-                Cars.Clear();
-
-                foreach (var car in cars)
-                {
-                    Cars.Add(car);
-                }
-            });
-
-            AddCommand = new RelayCommand(() => this.carHandlerService.AddCar(Cars));
-            ModifyCommand = new RelayCommand(() => this.carHandlerService.ModifyCar(Cars, CurrentCar));
-            DeleteCommand = new RelayCommand(() => this.carHandlerService.DeleteCar(Cars, CurrentCar));
-            ViewCommand = new RelayCommand(() => this.carHandlerService.ViewCar(CurrentCar));
-        }
-
-        public MainWindowVM() : this(IsInDesignModeStatic ? null : ServiceLocator.Current.GetInstance<ICarHandlerService>())
-        {
-        }
+      get { return currentCar; }
+      set { Set(ref currentCar, value); }
     }
+
+    private BrandModel currentBrand;
+
+    public BrandModel CurrentBrand
+    {
+      get { return currentBrand; }
+      set { Set(ref currentBrand, value); }
+    }
+
+    public ObservableCollection<CarModel> Cars { get; private set; }
+    public ObservableCollection<BrandModel> Brands { get; private set; }
+
+    public ICommand AddCarCommand { get; private set; }
+    public ICommand ModifyCarCommand { get; private set; }
+    public ICommand DeleteCarCommand { get; private set; }
+    public ICommand ViewCarCommand { get; private set; }
+    public ICommand LoadCommand { get; private set; }
+
+    public ICommand AddBrandCommand { get; private set; }
+    public ICommand ModifyBrandCommand { get; private set; }
+    public ICommand DeleteBrandCommand { get; private set; }
+    public ICommand ViewBrandCommand { get; private set; }
+
+    readonly ICarHandlerService carHandlerService;
+    readonly IBrandHandlerService brandHandlerService;
+
+    public MainWindowVM(ICarHandlerService carHandlerService, IBrandHandlerService brandHandlerService)
+    {
+      this.carHandlerService = carHandlerService;
+      this.brandHandlerService = brandHandlerService;
+      Cars = new ObservableCollection<CarModel>();
+      Brands = new ObservableCollection<BrandModel>();
+
+      if (IsInDesignMode)
+      {
+        Cars.Add(new CarModel(1, 1200, "3", 1));
+        Cars.Add(new CarModel(2, 2200, "MX8", 1));
+        var astra = new CarModel(3, 1400, "Astra G", 2);
+        Cars.Add(astra);
+        Cars.Add(new CarModel(4, 3000, "A4", 3));
+        CurrentCar = astra;
+
+        var mazda = new BrandModel(1, "Mazda");
+        Brands.Add(mazda);
+        Brands.Add(new BrandModel(2, "Opel"));
+        Brands.Add(new BrandModel(3, "BMW"));
+        CurrentBrand = mazda;
+      }
+
+      LoadCommand = new RelayCommand(() =>
+      {
+        var cars = this.carHandlerService.GetAll();
+        Cars.Clear();
+
+        foreach (var car in cars)
+        {
+          Cars.Add(car);
+        }
+        var brands = this.brandHandlerService.GetAll();
+        Brands.Clear();
+
+        foreach (var brand in brands)
+        {
+          Brands.Add(brand);
+        }
+      });
+
+      AddCarCommand = new RelayCommand(() => this.carHandlerService.AddCar(Cars));
+      ModifyCarCommand = new RelayCommand(() => this.carHandlerService.ModifyCar(Cars, CurrentCar));
+      DeleteCarCommand = new RelayCommand(() => this.carHandlerService.DeleteCar(Cars, CurrentCar));
+      ViewCarCommand = new RelayCommand(() => this.carHandlerService.ViewCar(CurrentCar));
+
+      AddBrandCommand = new RelayCommand(() => this.brandHandlerService.AddBrand(Brands));
+      ModifyBrandCommand = new RelayCommand(() => this.brandHandlerService.ModifyBrand(Brands, CurrentBrand));
+      DeleteBrandCommand = new RelayCommand(() => this.brandHandlerService.DeleteBrand(Brands, CurrentBrand));
+      ViewBrandCommand = new RelayCommand(() => this.brandHandlerService.ViewBrand(CurrentBrand));
+    }
+
+    public MainWindowVM() : this(IsInDesignModeStatic ? null : ServiceLocator.Current.GetInstance<ICarHandlerService>(), IsInDesignModeStatic ? null : ServiceLocator.Current.GetInstance<IBrandHandlerService>())
+    {
+    }
+  }
 }

@@ -19,6 +19,9 @@ namespace CarShop.WpfClient
             SimpleIocAsServiceLocator.Instance.Register<ICarEditorService, CarEditorViaWindowService>();
             SimpleIocAsServiceLocator.Instance.Register<ICarDisplayService, CarDisplayService>();
             SimpleIocAsServiceLocator.Instance.Register<ICarHandlerService, CarHandlerService>();
+            SimpleIocAsServiceLocator.Instance.Register<IBrandEditorService, BrandEditorViaWindowService>();
+            SimpleIocAsServiceLocator.Instance.Register<IBrandDisplayService, BrandDisplayService>();
+            SimpleIocAsServiceLocator.Instance.Register<IBrandHandlerService, BrandHandlerService>();
             SimpleIocAsServiceLocator.Instance.Register(() => Messenger.Default);
         }
     }

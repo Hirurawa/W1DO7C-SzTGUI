@@ -1,4 +1,7 @@
-﻿namespace CarShop.WpfClient.Models
+﻿using CarShop.Models.Entities;
+using System.Diagnostics;
+
+namespace CarShop.WpfClient.Models
 {
     public class BrandModel
     {
@@ -15,5 +18,12 @@
             Id = id;
             Name = name;
         }
+
+
+    public BrandModel(BrandModel other)
+    {
+      Id = other.Id;
+      Name = other.Name;
     }
+  }
 }

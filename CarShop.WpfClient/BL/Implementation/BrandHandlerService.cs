@@ -17,12 +17,12 @@ namespace CarShop.WpfClient.BL.Implementation
     readonly IBrandDisplayService brandDisplayService;
     HttpService httpService;
 
-    public BrandHandlerService(IMessenger messenger, IBrandEditorService editorService, IBrandDisplayService brandDisplayService) // Should come from IoC <- dependency injection
+    public BrandHandlerService(IMessenger messenger, IBrandEditorService editorService, IBrandDisplayService brandDisplayService) 
     {
       this.messenger = messenger;
       this.editorService = editorService;
       this.brandDisplayService = brandDisplayService;
-      httpService = new HttpService("Brand", "http://localhost:24577/api/"); // This can be taken via IoC in the future
+      httpService = new HttpService("Brand", "http://localhost:24577/api/");
     }
 
     public void AddBrand(IList<BrandModel> collection)

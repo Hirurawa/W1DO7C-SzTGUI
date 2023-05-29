@@ -48,7 +48,7 @@ namespace CarShop.WpfClient.ViewModels
 
         public System.Windows.Visibility CancelButtonVisibility => EditEnabled ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
 
-        public CarEditorVM(ICarHandlerService carHandlerService)
+        public CarEditorVM(IBrandHandlerService brandHandlerService)
         {
             CurrentCar = new CarModel();
 
@@ -61,17 +61,18 @@ namespace CarShop.WpfClient.ViewModels
                     new BrandModel(3, "BMW"),
                 };
 
-                SelectedBrand = AvailableBrands[1]; // Should sets the brandId too
+                SelectedBrand = AvailableBrands[1];
                 CurrentCar.Model = "Astra G";
                 CurrentCar.Price = 1750;
             }
             else
             {
-                AvailableBrands = carHandlerService.GetAllBrands();
-            }
+                AvailableBrands = brandHandlerService.GetAll();
+        SelectedBrand = AvailableBrands[1];
+      }
         }
 
-        public CarEditorVM() : this(IsInDesignModeStatic ? null: ServiceLocator.Current.GetInstance<ICarHandlerService>())
+        public CarEditorVM() : this(IsInDesignModeStatic ? null: ServiceLocator.Current.GetInstance<IBrandHandlerService>())
         {
         }
     }

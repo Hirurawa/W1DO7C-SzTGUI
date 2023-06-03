@@ -3,6 +3,7 @@ using CarShop.WpfClient.Models;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -10,6 +11,7 @@ namespace CarShop.WpfClient.ViewModels
 {
   public class MainWindowVM : ViewModelBase
   {
+
     private CarModel currentCar;
 
     public CarModel CurrentCar
@@ -28,6 +30,7 @@ namespace CarShop.WpfClient.ViewModels
 
     public ObservableCollection<CarModel> Cars { get; private set; }
     public ObservableCollection<BrandModel> Brands { get; private set; }
+    public ObservableCollection<AverageModel> Averages { get; private set; }
 
     public ICommand AddCarCommand { get; private set; }
     public ICommand ModifyCarCommand { get; private set; }
@@ -49,6 +52,7 @@ namespace CarShop.WpfClient.ViewModels
       this.brandHandlerService = brandHandlerService;
       Cars = new ObservableCollection<CarModel>();
       Brands = new ObservableCollection<BrandModel>();
+      Averages = new ObservableCollection<AverageModel>();
 
       if (IsInDesignMode)
       {
@@ -82,17 +86,25 @@ namespace CarShop.WpfClient.ViewModels
         {
           Brands.Add(brand);
         }
+
+        var avg = this.carHandlerService.GetBrandAverages();
+        Averages.Clear();
+
+        foreach (var average in avg)
+        {
+          Averages.Add(average);
+        }
       });
 
-      AddCarCommand = new RelayCommand(() => this.carHandlerService.AddCar(Cars));
-      ModifyCarCommand = new RelayCommand(() => this.carHandlerService.ModifyCar(Cars, CurrentCar));
-      DeleteCarCommand = new RelayCommand(() => this.carHandlerService.DeleteCar(Cars, CurrentCar));
-      ViewCarCommand = new RelayCommand(() => this.carHandlerService.ViewCar(CurrentCar));
+      AddCarCommand = new RelayCommand(() => { this.carHandlerService.AddCar(Cars); LoadCommand.Execute(null); });
+      ModifyCarCommand = new RelayCommand(() => { this.carHandlerService.ModifyCar(Cars, CurrentCar); LoadCommand.Execute(null); });
+      DeleteCarCommand = new RelayCommand(() => { this.carHandlerService.DeleteCar(Cars, CurrentCar); LoadCommand.Execute(null); });
+      ViewCarCommand = new RelayCommand(() => { this.carHandlerService.ViewCar(CurrentCar); });
 
-      AddBrandCommand = new RelayCommand(() => this.brandHandlerService.AddBrand(Brands));
-      ModifyBrandCommand = new RelayCommand(() => this.brandHandlerService.ModifyBrand(Brands, CurrentBrand));
-      DeleteBrandCommand = new RelayCommand(() => this.brandHandlerService.DeleteBrand(Brands, CurrentBrand));
-      ViewBrandCommand = new RelayCommand(() => this.brandHandlerService.ViewBrand(CurrentBrand));
+      AddBrandCommand = new RelayCommand(() => { this.brandHandlerService.AddBrand(Brands); LoadCommand.Execute(null); });
+      ModifyBrandCommand = new RelayCommand(() => { this.brandHandlerService.ModifyBrand(Brands, CurrentBrand); LoadCommand.Execute(null); });
+      DeleteBrandCommand = new RelayCommand(() => { this.brandHandlerService.DeleteBrand(Brands, CurrentBrand); LoadCommand.Execute(null); });
+      ViewBrandCommand = new RelayCommand(() => { this.brandHandlerService.ViewBrand(CurrentBrand); });
     }
 
     public MainWindowVM() : this(IsInDesignModeStatic ? null : ServiceLocator.Current.GetInstance<ICarHandlerService>(), IsInDesignModeStatic ? null : ServiceLocator.Current.GetInstance<IBrandHandlerService>())

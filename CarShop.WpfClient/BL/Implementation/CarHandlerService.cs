@@ -167,5 +167,12 @@ namespace CarShop.WpfClient.BL.Implementation
     {
       carDisplayService.Display(car);
     }
+
+    public IList<AverageModel> GetBrandAverages()
+    {
+      IList<AverageModel> averages = httpService.GetBrandAverages<AverageModel>();
+
+      return averages.ToList();
+    }
   }
 }

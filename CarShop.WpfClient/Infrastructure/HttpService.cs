@@ -22,6 +22,17 @@ namespace CarShop.WpfClient.Infrastructure
             serializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web);
         }
 
+        public List<T> GetBrandAverages<T>(string actionName = null)
+        {
+            using (var client = new HttpClient())
+            {
+                InitClient(client);
+
+                var response = client.GetAsync(GetActionName(actionName ?? nameof(GetBrandAverages))).GetAwaiter().GetResult(); // Block here
+                return JsonSerializer.Deserialize<List<T>>(response.Content.ReadAsStringAsync().GetAwaiter().GetResult(), serializerOptions);
+            }
+        }
+
         public List<T> GetAll<T>(string actionName = null)
         {
             using (var client = new HttpClient())

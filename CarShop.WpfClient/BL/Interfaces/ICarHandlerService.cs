@@ -12,5 +12,6 @@ namespace CarShop.WpfClient.BL.Interfaces
         IList<CarModel> GetAll();
 
         IList<BrandModel> GetAllBrands();
+        IList<AverageModel> GetBrandAverages();
     }
 }

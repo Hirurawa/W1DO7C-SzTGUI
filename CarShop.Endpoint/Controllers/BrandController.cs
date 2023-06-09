@@ -1,13 +1,12 @@
 ﻿using CarShop.Endpoint.Services;
 using CarShop.Logic.Interfaces;
-using CarShop.Logic.Services;
 using CarShop.Models.DTOs;
 using CarShop.Models.Entities;
 using CarShop.Models.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CarShop.Endpoint.Controllers

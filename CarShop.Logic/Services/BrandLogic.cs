@@ -4,8 +4,6 @@ using CarShop.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarShop.Logic.Services
 {
@@ -47,7 +45,6 @@ namespace CarShop.Logic.Services
 
     public Brand Update(Brand entity)
     {
-
       var result = _brandRepository.Update(entity);
 
       return result;

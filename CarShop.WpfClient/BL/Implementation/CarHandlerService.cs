@@ -174,5 +174,14 @@ namespace CarShop.WpfClient.BL.Implementation
 
       return averages.ToList();
     }
+
+    public IList<CarModel> GetExpensiveCar()
+    {
+      return httpService.GetExpensiveCar<CarModel>();
+    }
+    public IList<CarModel> GetCheapCar()
+    {
+      return httpService.GetCheapCar<CarModel>();
+    }
   }
 }

@@ -2,22 +2,17 @@
 using CarShop.Logic.Services;
 using CarShop.Repository.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarShop.Logic.Infrastructure
 {
-    public static class BLInitialization
+  public static class BLInitialization
+  {
+    public static void InitBlServices(IServiceCollection services)
     {
-        public static void InitBlServices(IServiceCollection services)
-        {
-            RepoInitialization.InitRepoServices(services);
+      RepoInitialization.InitRepoServices(services);
 
-            services.AddScoped<ICarLogic, CarLogic>();
-            services.AddScoped<IBrandLogic, BrandLogic>();
-        }
+      services.AddScoped<ICarLogic, CarLogic>();
+      services.AddScoped<IBrandLogic, BrandLogic>();
     }
+  }
 }

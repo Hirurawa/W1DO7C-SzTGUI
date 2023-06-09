@@ -2,7 +2,7 @@
 
 namespace CarShop.Repository.Interfaces
 {
-    public interface ICarRepository : IRepositoryBase<Car, int>
-    {
-    }
+  public interface ICarRepository : IRepositoryBase<Car, int>
+  {
+  }
 }

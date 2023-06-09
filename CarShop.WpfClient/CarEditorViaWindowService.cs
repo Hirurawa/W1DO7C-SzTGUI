@@ -3,18 +3,18 @@ using CarShop.WpfClient.Models;
 
 namespace CarShop.WpfClient
 {
-    public class CarEditorViaWindowService : ICarEditorService
+  public class CarEditorViaWindowService : ICarEditorService
+  {
+    public CarModel EditCar(CarModel car)
     {
-        public CarModel EditCar(CarModel car)
-        {
-            var window = new CarEditorWindow(car);
+      var window = new CarEditorWindow(car);
 
-            if (window.ShowDialog() == true)
-            {
-                return window.Car;
-            }
+      if (window.ShowDialog() == true)
+      {
+        return window.Car;
+      }
 
-            return null;
-        }
+      return null;
     }
+  }
 }

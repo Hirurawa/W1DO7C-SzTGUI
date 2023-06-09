@@ -2,16 +2,16 @@
 
 namespace CarShop.Repository.Interfaces
 {
-    public interface IRepositoryBase<TEntity, TKey>
-    {
-        IQueryable<TEntity> ReadAll();
+  public interface IRepositoryBase<TEntity, TKey>
+  {
+    IQueryable<TEntity> ReadAll();
 
-        TEntity Read(TKey id);
+    TEntity Read(TKey id);
 
-        TEntity Create(TEntity entity);
+    TEntity Create(TEntity entity);
 
-        TEntity Update(TEntity entity);
+    TEntity Update(TEntity entity);
 
-        void Delete(TKey id);
-    }
+    void Delete(TKey id);
+  }
 }

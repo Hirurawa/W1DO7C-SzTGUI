@@ -7,22 +7,22 @@ using System.Windows;
 
 namespace CarShop.WpfClient
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
+  /// <summary>
+  /// Interaction logic for App.xaml
+  /// </summary>
+  public partial class App : Application
+  {
+    public App()
     {
-        public App()
-        {
-            ServiceLocator.SetLocatorProvider(() => SimpleIocAsServiceLocator.Instance);
+      ServiceLocator.SetLocatorProvider(() => SimpleIocAsServiceLocator.Instance);
 
-            SimpleIocAsServiceLocator.Instance.Register<ICarEditorService, CarEditorViaWindowService>();
-            SimpleIocAsServiceLocator.Instance.Register<ICarDisplayService, CarDisplayService>();
-            SimpleIocAsServiceLocator.Instance.Register<ICarHandlerService, CarHandlerService>();
-            SimpleIocAsServiceLocator.Instance.Register<IBrandEditorService, BrandEditorViaWindowService>();
-            SimpleIocAsServiceLocator.Instance.Register<IBrandDisplayService, BrandDisplayService>();
-            SimpleIocAsServiceLocator.Instance.Register<IBrandHandlerService, BrandHandlerService>();
-            SimpleIocAsServiceLocator.Instance.Register(() => Messenger.Default);
-        }
+      SimpleIocAsServiceLocator.Instance.Register<ICarEditorService, CarEditorViaWindowService>();
+      SimpleIocAsServiceLocator.Instance.Register<ICarDisplayService, CarDisplayService>();
+      SimpleIocAsServiceLocator.Instance.Register<ICarHandlerService, CarHandlerService>();
+      SimpleIocAsServiceLocator.Instance.Register<IBrandEditorService, BrandEditorViaWindowService>();
+      SimpleIocAsServiceLocator.Instance.Register<IBrandDisplayService, BrandDisplayService>();
+      SimpleIocAsServiceLocator.Instance.Register<IBrandHandlerService, BrandHandlerService>();
+      SimpleIocAsServiceLocator.Instance.Register(() => Messenger.Default);
     }
+  }
 }

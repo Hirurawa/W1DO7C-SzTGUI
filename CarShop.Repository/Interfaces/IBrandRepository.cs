@@ -2,8 +2,8 @@
 
 namespace CarShop.Repository.Interfaces
 {
-    public interface IBrandRepository : IRepositoryBase<Brand, int>
-    {
-        void Delete(Brand entity);
-    }
+  public interface IBrandRepository : IRepositoryBase<Brand, int>
+  {
+    void Delete(Brand entity);
+  }
 }

@@ -5,15 +5,15 @@ using System.Linq;
 
 namespace CarShop.Repository.Repositories
 {
-    public class CarRepository : RepositoryBase<Car, int>, ICarRepository
+  public class CarRepository : RepositoryBase<Car, int>, ICarRepository
+  {
+    public CarRepository(CarShopDbContext context) : base(context)
     {
-        public CarRepository(CarShopDbContext context) : base(context)
-        {
-        }
-
-        public override Car Read(int id)
-        {
-            return ReadAll().SingleOrDefault(x => x.Id == id);
-        }
     }
+
+    public override Car Read(int id)
+    {
+      return ReadAll().SingleOrDefault(x => x.Id == id);
+    }
+  }
 }

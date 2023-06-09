@@ -2,8 +2,8 @@
 
 namespace CarShop.WpfClient.BL.Interfaces
 {
-    public interface ICarDisplayService
-    {
-        void Display(CarModel car);
-    }
+  public interface ICarDisplayService
+  {
+    void Display(CarModel car);
+  }
 }

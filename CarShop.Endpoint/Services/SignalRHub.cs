@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using System.Threading.Tasks;
 using System;
+using System.Threading.Tasks;
 
 namespace CarShop.Endpoint.Services
 {

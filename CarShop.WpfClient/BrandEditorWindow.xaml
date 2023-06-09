@@ -6,7 +6,7 @@
         xmlns:ViewModels="clr-namespace:CarShop.WpfClient.ViewModels"
         xmlns:local="clr-namespace:CarShop.WpfClient"
         mc:Ignorable="d"
-        Title="Car Window" Height="300" Width="300" Loaded="WindowLoaded">
+        Title="Brand Window" Height="300" Width="300" Loaded="WindowLoaded">
   <Window.Resources>
     <ViewModels:BrandEditorVM x:Key="VM" />
   </Window.Resources>

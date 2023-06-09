@@ -3,13 +3,13 @@ using CarShop.WpfClient.Models;
 
 namespace CarShop.WpfClient
 {
-    public class BrandDisplayService : IBrandDisplayService
+  public class BrandDisplayService : IBrandDisplayService
+  {
+    public void Display(BrandModel brand)
     {
-        public void Display(BrandModel brand)
-        {
-            var window = new BrandEditorWindow(brand, false);
+      var window = new BrandEditorWindow(brand, false);
 
-            window.Show();
-        }
+      window.Show();
     }
+  }
 }

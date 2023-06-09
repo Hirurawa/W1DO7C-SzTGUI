@@ -17,7 +17,7 @@ namespace CarShop.WpfClient.BL.Implementation
     readonly IBrandDisplayService brandDisplayService;
     HttpService httpService;
 
-    public BrandHandlerService(IMessenger messenger, IBrandEditorService editorService, IBrandDisplayService brandDisplayService) 
+    public BrandHandlerService(IMessenger messenger, IBrandEditorService editorService, IBrandDisplayService brandDisplayService)
     {
       this.messenger = messenger;
       this.editorService = editorService;
@@ -128,7 +128,8 @@ namespace CarShop.WpfClient.BL.Implementation
       MessageBoxResult result;
       result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
 
-      if (result == MessageBoxResult.Yes) {
+      if (result == MessageBoxResult.Yes)
+      {
         if (brand != null)
         {
           var operationResult = httpService.Delete(brand.Id);

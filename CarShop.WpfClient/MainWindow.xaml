@@ -6,7 +6,7 @@
         xmlns:ViewModels="clr-namespace:CarShop.WpfClient.ViewModels"
         xmlns:Models="clr-namespace:CarShop.WpfClient.Models"
         mc:Ignorable="d"
-        Title="Car handler" Height="450" Width="800" Loaded="WindowLoaded" Closing="WindowClose">
+        Title="Car handler" Height="600" Width="800" Loaded="WindowLoaded" Closing="WindowClose">
   <Window.Resources>
     <ViewModels:MainWindowVM x:Key="VM"/>
     <DataTemplate x:Key="CarListTemplate" DataType="Models:CarModel">
@@ -53,10 +53,18 @@
       <ColumnDefinition Width="1*"/>
       <ColumnDefinition Width="1*"/>
     </Grid.ColumnDefinitions>
-    <ListBox ItemsSource="{Binding Cars}" SelectedItem="{Binding CurrentCar}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource CarListTemplate}"/>
+    <StackPanel Grid.Column="0">
+      <Label Content="Cars"/>
+      <ListBox ItemsSource="{Binding Cars}" SelectedItem="{Binding CurrentCar}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource CarListTemplate}"/>
+      <Label Content="Most expensive car(s):[Non-CRUD]" />
+      <ListBox ItemsSource="{Binding ExpensiveCar}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource CarListTemplate}" />
+      <Label Content="Least expensive car(s):[Non-CRUD]" />
+      <ListBox ItemsSource="{Binding CheapCar}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource CarListTemplate}" />
+    </StackPanel>
     <StackPanel Grid.Column="1">
-    <ListBox ItemsSource="{Binding Brands}" SelectedItem="{Binding CurrentBrand}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource BrandListTemplate}" />
-      <Label Content="Average prices per brand:" />
+      <Label Content="Brands"/>
+      <ListBox ItemsSource="{Binding Brands}" SelectedItem="{Binding CurrentBrand}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource BrandListTemplate}" />
+      <Label Content="Average car prices per brand:[Non-CRUD]" />
       <ListBox ItemsSource="{Binding Averages}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource AverageListTemplate}" />
     </StackPanel>
     <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">

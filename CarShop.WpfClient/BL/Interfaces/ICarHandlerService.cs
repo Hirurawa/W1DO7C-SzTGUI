@@ -3,15 +3,18 @@ using System.Collections.Generic;
 
 namespace CarShop.WpfClient.BL.Interfaces
 {
-    public interface ICarHandlerService
-    {
-        void AddCar(IList<CarModel> collection);
-        void ModifyCar(IList<CarModel> collection, CarModel car);
-        void DeleteCar(IList<CarModel> collection, CarModel car);
-        void ViewCar(CarModel car);
-        IList<CarModel> GetAll();
+  public interface ICarHandlerService
+  {
+    void AddCar(IList<CarModel> collection);
+    void ModifyCar(IList<CarModel> collection, CarModel car);
+    void DeleteCar(IList<CarModel> collection, CarModel car);
+    void ViewCar(CarModel car);
+    IList<CarModel> GetAll();
 
-        IList<BrandModel> GetAllBrands();
-        IList<AverageModel> GetBrandAverages();
-    }
+    IList<BrandModel> GetAllBrands();
+    IList<AverageModel> GetBrandAverages();
+    IList<CarModel> GetExpensiveCar();
+    IList<CarModel> GetCheapCar();
+
+  }
 }

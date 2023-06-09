@@ -3,7 +3,6 @@ using CarShop.WpfClient.Models;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -31,6 +30,8 @@ namespace CarShop.WpfClient.ViewModels
     public ObservableCollection<CarModel> Cars { get; private set; }
     public ObservableCollection<BrandModel> Brands { get; private set; }
     public ObservableCollection<AverageModel> Averages { get; private set; }
+    public ObservableCollection<CarModel> ExpensiveCar { get; private set; }
+    public ObservableCollection<CarModel> CheapCar { get; private set; }
 
     public ICommand AddCarCommand { get; private set; }
     public ICommand ModifyCarCommand { get; private set; }
@@ -53,6 +54,8 @@ namespace CarShop.WpfClient.ViewModels
       Cars = new ObservableCollection<CarModel>();
       Brands = new ObservableCollection<BrandModel>();
       Averages = new ObservableCollection<AverageModel>();
+      ExpensiveCar = new ObservableCollection<CarModel>();
+      CheapCar = new ObservableCollection<CarModel>();
 
       if (IsInDesignMode)
       {
@@ -68,6 +71,10 @@ namespace CarShop.WpfClient.ViewModels
         Brands.Add(new BrandModel(2, "Opel"));
         Brands.Add(new BrandModel(3, "BMW"));
         CurrentBrand = mazda;
+
+        ExpensiveCar.Add(astra);
+        CheapCar.Add(astra);
+
       }
 
       LoadCommand = new RelayCommand(() =>
@@ -93,6 +100,22 @@ namespace CarShop.WpfClient.ViewModels
         foreach (var average in avg)
         {
           Averages.Add(average);
+        }
+
+        var expensive = this.carHandlerService.GetExpensiveCar();
+        ExpensiveCar.Clear();
+
+        foreach (var exp in expensive)
+        {
+          ExpensiveCar.Add(exp);
+        }
+
+        var cheap = this.carHandlerService.GetCheapCar();
+        CheapCar.Clear();
+
+        foreach (var che in cheap)
+        {
+          CheapCar.Add(che);
         }
       });
 
